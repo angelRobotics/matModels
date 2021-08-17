@@ -1,0 +1,1421 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     67239,       1413]
+NotebookOptionsPosition[     66506,       1393]
+NotebookOutlinePosition[     66839,       1408]
+CellTagsIndexPosition[     66796,       1405]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[{
+ StyleBox["AngelRobots \n", "Title"],
+ StyleBox["A set of 3 DoF robots engineered to be affordable in the poorest \
+corners of the world ", "Chapter"]
+}], "Text",
+ CellChangeTimes->{{3.827668481840199*^9, 3.827668575653707*^9}, {
+  3.827668609283846*^9, 3.827668612718617*^9}, {3.838112696616971*^9, 
+  3.838112707282384*^9}, {3.8381127427255993`*^9, 3.8381127742179193`*^9}, {
+  3.838112806354228*^9, 3.838112909811817*^9}, {3.838112950670889*^9, 
+  3.838112994555566*^9}, {3.838113026276485*^9, 3.83811302984114*^9}, {
+  3.838113069241541*^9, 
+  3.8381130703533783`*^9}},ExpressionUUID->"653a274c-dec1-48d6-a7ee-\
+b193e8cd8ef3"],
+
+Cell[TextData[{
+ "With reasonable trade-offs in precision relative to the intended \
+application\[LineSeparator]With proposed applications in:\[LineSeparator]1. \
+Wood working (CNC)\n2. Agriculture\n3. Metal working (CNC)\n4. Construction \
+(Brick laying)\n5. Any other things that the creative mind can conceive.\n6. \
+Brick Making\n7. Book Binding\n8. Hospitality\[LineSeparator]\[LineSeparator]",
+ StyleBox["Design Philosophy",
+  FontWeight->"Bold"],
+ "\n-> It is a golden principle to \[OpenCurlyDoubleQuote]gather the \
+fragments that nothing be lost, wasted\[CloseCurlyDoubleQuote]. It is also \
+true that \[OpenCurlyDoubleQuote]the poor will be with us always\
+\[CloseCurlyDoubleQuote].  But by much economy much can be done in helping \
+bring technological advance to the poorest corners of the world. This being \
+our goal, our study and third-world engineering practice, goes beyond \
+standard engineering to the study of standard parts, which due to mass \
+production, are of low cost, and deeper still into which of a set of those \
+that could perform the same mechanical function are the cheapest while not \
+compromising on quality nor going below safety standards. Then designing \
+robots to be built using these parts. The result is a set of robots that \
+anyone can build and use, and as far as possible, everyone can afford, if not \
+in person, then as a group.\n\n",
+ StyleBox["## The Robots",
+  FontWeight->"Bold"],
+ "\n1. 1 DoF (Frame)"
+}], "Text",
+ CellChangeTimes->{{3.827668623051236*^9, 3.827668636827508*^9}, {
+  3.838113012001361*^9, 3.838113049476972*^9}, {3.8381130857952833`*^9, 
+  3.838113124528598*^9}, {3.8381131842968607`*^9, 3.8381132366371307`*^9}, {
+  3.838113276297577*^9, 3.83811328045508*^9}, {3.838113393298217*^9, 
+  3.8381134281772614`*^9}, {3.838113650989818*^9, 3.838113781969494*^9}, {
+  3.838113824694323*^9, 3.838113903910615*^9}, {3.838113941562069*^9, 
+  3.8381141628592167`*^9}, {3.83811424769669*^9, 3.838114279895636*^9}, {
+  3.838114310806954*^9, 3.8381143806144953`*^9}, {3.838114430746872*^9, 
+  3.838114445018463*^9}, {3.838114491166156*^9, 3.8381145071552896`*^9}, {
+  3.8381145395954857`*^9, 3.8381145885791187`*^9}, {3.838114657238071*^9, 
+  3.838114856997423*^9}, {3.838134501669928*^9, 3.838134522668605*^9}, {
+  3.838188671066311*^9, 
+  3.838188689176877*^9}},ExpressionUUID->"7df758c8-f7f3-49d3-8d69-\
+edb7858774be"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"motor", "[", 
+    RowBox[{
+    "endPointofBarAgr_", ",", " ", "barCrossSectionalWidth_", ",", 
+     "barCrossSectionalHeight_", ",", "  ", "axis_", ",", " ", "number_", ",",
+      " ", "axleDia_", ",", " ", "bearingDia_", ",", " ", "axleLength_", ",", 
+     " ", "bearingLength_"}], "]"}], ":=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"axleLength", " ", "=", " ", "20"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"bearingLength", " ", "=", " ", "5"}], ";"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"endPointofBar", "=", " ", 
+      RowBox[{"Switch", "[", 
+       RowBox[{"number", ",", " ", "0", ",", " ", 
+        RowBox[{"endPointofBarAgr", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", " ", "1", ",", " ", 
+        RowBox[{"endPointofBarAgr", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Switch", "[", 
+      RowBox[{"axis", ",", " ", "\"\<x\>\"", ",", 
+       RowBox[{
+        RowBox[{"offsetX1", "=", 
+         RowBox[{"barCrossSectionalWidth", "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX1", "=", 
+         RowBox[{"barCrossSectionalWidth", "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX2", "=", " ", 
+         RowBox[{
+          RowBox[{"-", "barCrossSectionalWidth"}], "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX", " ", "=", " ", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+          "number", ",", " ", "0", ",", "offsetX1", ",", " ", "1", ",", " ", 
+           "offsetX2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetY1", "=", 
+         RowBox[{"barCrossSectionalWidth", "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetY2", "=", 
+         RowBox[{
+          RowBox[{"-", "barCrossSectionalWidth"}], "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetY", " ", "=", " ", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+          "number", ",", " ", "0", ",", "offsetY1", ",", " ", "1", ",", " ", 
+           "offsetY2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetZ1", "=", "barCrossSectionalHeight"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetZ2", "=", " ", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetZ", " ", "=", " ", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+          "number", ",", " ", "0", ",", "offsetZ1", ",", " ", "1", ",", " ", 
+           "offsetZ2"}], "]"}]}]}], ",", "\[IndentingNewLine]", "\"\<y\>\"", 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"offsetY1", "=", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetY2", "=", "0"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+      ";", "\[IndentingNewLine]", 
+     RowBox[{"axleAndBearingPoints", " ", "=", " ", 
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY"}], ",", 
+            RowBox[{
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY"}], ",", 
+            RowBox[{
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ", "+", 
+             "axleLength"}]}], "}"}]}], "\[IndentingNewLine]", "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY"}], ",", 
+            RowBox[{
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ", "+", 
+             "axleLength", "-", "bearingLength"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY"}], ",", 
+            RowBox[{
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ", "+", 
+             "axleLength", "+", "25"}]}], "}"}]}], "\[IndentingNewLine]", 
+         "}"}]}], "\[IndentingNewLine]", "}"}]}], ";", "\[IndentingNewLine]", 
+     
+     RowBox[{"GraphicsGroup", "[", 
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Cylinder", "[", 
+         RowBox[{
+          RowBox[{"axleAndBearingPoints", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+          RowBox[{"axleDia", "/", "2"}]}], "]"}], ",", " ", 
+        RowBox[{"Cylinder", "[", 
+         RowBox[{
+          RowBox[{"axleAndBearingPoints", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+          RowBox[{"bearingDia", "/", "2"}]}], "]"}]}], "\[IndentingNewLine]", 
+       "}"}], "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", "}"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"axleAndBearingPointsCalc", "[", 
+    RowBox[{
+    "endPointofBarAgr_", ",", " ", "barCrossSectionalWidth_", ",", 
+     "barCrossSectionalHeight_", ",", "  ", "axis_", ",", " ", "number_", ",",
+      "axleDia_", ",", " ", "bearingDia_", ",", " ", "axleLength_", ",", " ", 
+     "bearingLength_"}], "]"}], ":=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"axleLength", " ", "=", " ", "20"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"bearingLength", " ", "=", " ", "5"}], ";"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"endPointofBar", "=", " ", 
+      RowBox[{"Switch", "[", 
+       RowBox[{"number", ",", " ", "0", ",", " ", 
+        RowBox[{"endPointofBarAgr", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", " ", "1", ",", " ", 
+        RowBox[{"endPointofBarAgr", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Switch", "[", 
+      RowBox[{"axis", ",", " ", "\"\<x\>\"", ",", 
+       RowBox[{
+        RowBox[{"offsetX1", "=", 
+         RowBox[{"barCrossSectionalWidth", "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX1", "=", 
+         RowBox[{"barCrossSectionalWidth", "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX2", "=", " ", 
+         RowBox[{
+          RowBox[{"-", "barCrossSectionalWidth"}], "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX", " ", "=", " ", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+          "number", ",", " ", "0", ",", "offsetX1", ",", " ", "1", ",", " ", 
+           "offsetX2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetY1", "=", 
+         RowBox[{"barCrossSectionalWidth", "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetY2", "=", 
+         RowBox[{
+          RowBox[{"-", "barCrossSectionalWidth"}], "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetY", " ", "=", " ", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+          "number", ",", " ", "0", ",", "offsetY1", ",", " ", "1", ",", " ", 
+           "offsetY2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetZ1", "=", "barCrossSectionalHeight"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetZ2", "=", " ", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetZ", " ", "=", " ", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+          "number", ",", " ", "0", ",", "offsetZ1", ",", " ", "1", ",", " ", 
+           "offsetZ2"}], "]"}]}]}], ",", "\[IndentingNewLine]", "\"\<y\>\"", 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"offsetY1", "=", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetY2", "=", "0"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+      ";", "\[IndentingNewLine]", 
+     RowBox[{"axleAndBearingPoints", " ", "=", " ", 
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY"}], ",", 
+            RowBox[{
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY"}], ",", 
+            RowBox[{
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ", "+", 
+             "axleLength"}]}], "}"}]}], "\[IndentingNewLine]", "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY"}], ",", 
+            RowBox[{
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ", "+", 
+             "axleLength", "-", "bearingLength"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+            RowBox[{"0", "+", 
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY"}], ",", 
+            RowBox[{
+             RowBox[{"endPointofBar", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ", "+", 
+             "axleLength"}]}], "}"}]}], "\[IndentingNewLine]", "}"}]}], 
+       "\[IndentingNewLine]", "}"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"GraphicsGroup", "[", 
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Cylinder", "[", 
+         RowBox[{
+          RowBox[{"axleAndBearingPoints", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", "  ", 
+          RowBox[{"axleDia", "/", "2"}]}], "]"}], ",", " ", 
+        RowBox[{"Cylinder", "[", 
+         RowBox[{
+          RowBox[{"axleAndBearingPoints", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+          RowBox[{"bearingDia", "/", "2"}]}], "]"}]}], "\[IndentingNewLine]", 
+       "}"}], "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", "}"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"chain", "[", 
+    RowBox[{
+    "endPointofBarAgr_", ",", " ", "barCrossSectionalWidth_", ",", 
+     "barCrossSectionalHeight_", ",", "  ", "axis_", ",", " ", "number_", ",",
+      "axleDia_", ",", " ", "bearingDia_", ",", " ", "axleLength_", ",", " ", 
+     "bearingLength_"}], "]"}], ":=", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{"axleLength", " ", "=", " ", "20"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"bearingLength", " ", "=", " ", "5"}], ";"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"endPointofBar", "=", " ", 
+      RowBox[{"Switch", "[", 
+       RowBox[{"number", ",", " ", "0", ",", " ", 
+        RowBox[{"endPointofBarAgr", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", " ", "1", ",", " ", 
+        RowBox[{"endPointofBarAgr", "[", 
+         RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Switch", "[", 
+      RowBox[{"axis", ",", " ", "\"\<x\>\"", ",", 
+       RowBox[{
+        RowBox[{"offsetX1", "=", 
+         RowBox[{"barCrossSectionalWidth", "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX1", "=", 
+         RowBox[{"barCrossSectionalWidth", "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX2", "=", " ", 
+         RowBox[{
+          RowBox[{"-", "barCrossSectionalWidth"}], "/", "2"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetX", " ", "=", " ", 
+         RowBox[{
+          RowBox[{"Switch", "[", 
+           RowBox[{
+           "number", ",", " ", "0", ",", "offsetX1", ",", " ", "1", ",", " ", 
+            "offsetX2"}], "]"}], " ", "-", "  ", 
+          RowBox[{"barCrossSectionalWidth", "/", "2"}]}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"chainX", " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"endPointofBarAgr", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "-", 
+          RowBox[{
+           RowBox[{"endPointofBarAgr", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetY1", "=", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"chainY", "=", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetY2", "=", 
+         RowBox[{"-", "barCrossSectionalWidth"}]}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetY", " ", "=", " ", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+          "number", ",", " ", "0", ",", "offsetY1", ",", " ", "1", ",", " ", 
+           "offsetY2"}], "]"}]}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetZ1", "=", "barCrossSectionalHeight"}], ";", 
+        "\[IndentingNewLine]", 
+        RowBox[{"offsetZ2", "=", " ", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetZ", " ", "=", " ", 
+         RowBox[{"Switch", "[", 
+          RowBox[{
+          "number", ",", " ", "0", ",", "offsetZ1", ",", " ", "1", ",", " ", 
+           "offsetZ2"}], "]"}]}]}], ",", "\[IndentingNewLine]", "\"\<y\>\"", 
+       ",", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"offsetY1", "=", "0"}], ";", "\[IndentingNewLine]", 
+        RowBox[{"offsetY2", "=", "0"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+      ";", "\[IndentingNewLine]", 
+     RowBox[{"chainPoints", " ", "=", " ", "\[IndentingNewLine]", 
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"0", "+", 
+           RowBox[{"endPointofBar", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX"}], ",", 
+          RowBox[{"0", "+", 
+           RowBox[{"endPointofBar", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY", "+", "chainY"}], 
+          ",", 
+          RowBox[{
+           RowBox[{"endPointofBar", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ", "+", 
+           "axleLength"}]}], "}"}], ",", "\[IndentingNewLine]", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"0", "+", 
+           RowBox[{"endPointofBar", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "+", "offsetX", "+", " ", 
+           "chainX"}], ",", 
+          RowBox[{"0", "+", 
+           RowBox[{"endPointofBar", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "+", "offsetY", "+", "chainY"}], 
+          ",", 
+          RowBox[{
+           RowBox[{"endPointofBar", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], "+", "offsetZ", "+", 
+           "axleLength"}]}], "}"}]}], "\[IndentingNewLine]", "}"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"GraphicsGroup", "[", 
+      RowBox[{"{", "\[IndentingNewLine]", 
+       RowBox[{"Thick", ",", " ", 
+        RowBox[{"Line", "[", "chainPoints", "]"}]}], "\[IndentingNewLine]", 
+       "}"}], "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", "}"}]}], 
+  "\[IndentingNewLine]", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+  "\[IndentingNewLine]", "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"OneDoFFrame", "[", 
+    RowBox[{
+    "x_", ",", "y_", ",", " ", "z_", ",", " ", "offsetX_", ",", " ", 
+     "offsetY_", ",", " ", "offsetZ_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"origin", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"halfWorkSpaceWidth", " ", "=", " ", "100"}], ";", " ", 
+       RowBox[{"(*", 
+        RowBox[{"along", " ", "x"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"outerCylinderHeight", "=", "210"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"minCylinderHeight", "=", "270"}], ";", "\[IndentingNewLine]", 
+       
+       RowBox[{"maxCylinderLength", " ", "=", " ", "460"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"maxDisp", "  ", "=", " ", 
+        RowBox[{"maxCylinderLength", "-", "minCylinderHeight"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"barCrossSectionalWidth", " ", "=", " ", "51"}], ";", " ", 
+       RowBox[{"(*", 
+        RowBox[{"2", " ", "inches"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"barCrossSectionalHeight", " ", "=", " ", "51"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"axleDia", " ", "=", "5"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"bearingDia", " ", "=", " ", "10"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"axleLength", "=", "10"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"bearingLengh", "=", "5"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"motorLength", "=", "15"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"outerCylinderDia", "=", " ", "47"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"innerCylinderDia", " ", "=", " ", "38.5"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"addedOrigin", " ", "=", " ", "0"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", "Workspace", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"halfWorkSpaceLength", " ", "=", " ", 
+        RowBox[{"minCylinderHeight", "+", " ", "maxDisp", " ", "+", " ", 
+         RowBox[{"2", "*", "barCrossSectionalWidth"}]}]}], ";", " ", 
+       RowBox[{"(*", 
+        RowBox[{"along", " ", "Y"}], "*)"}], 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"5", "*", "barCrossSectionalWidth"}], "+", 
+          "maxCylinderLength"}], ";"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"(*", "firstHalf", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"frameOrigin", " ", "=", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"origin", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], " ", "+", " ", "offsetX"}], ",", 
+          RowBox[{
+           RowBox[{"origin", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], " ", "+", " ", "offsetY"}], ",", 
+          " ", 
+          RowBox[{
+           RowBox[{"origin", "[", 
+            RowBox[{"[", "3", "]"}], "]"}], " ", "+", " ", "offsetZ"}]}], 
+         "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameBar1Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"frameOrigin", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{"frameOrigin", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", 
+            RowBox[{"frameOrigin", "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"frameOrigin", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "halfWorkSpaceWidth", " ", 
+             "+", " ", 
+             RowBox[{"2", " ", "*", " ", "barCrossSectionalWidth"}]}], ",", 
+            " ", 
+            RowBox[{
+             RowBox[{"frameOrigin", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "barCrossSectionalWidth"}],
+             ",", 
+            RowBox[{
+             RowBox[{"frameOrigin", "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", 
+             "barCrossSectionalHeight"}]}], "}"}]}], "\[IndentingNewLine]", 
+         "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"counter", " ", "clockwise"}], "*)"}], "\[IndentingNewLine]", 
+       
+       RowBox[{"firstFrameBar2Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar1Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "-", "barCrossSectionalWidth"}],
+             ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar1Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "-", "barCrossSectionalWidth", 
+             "+", "barCrossSectionalWidth"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar1Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "halfWorkSpaceLength"}], 
+            ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar1Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", 
+             "barCrossSectionalHeight"}]}], "}"}]}], "\[IndentingNewLine]", 
+         "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameBar3Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar1Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "halfWorkSpaceLength", "+",
+              "barCrossSectionalWidth"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar1Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "halfWorkSpaceLength", "+",
+              "barCrossSectionalWidth"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]",
+          "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameBar4Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar2Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "-", "halfWorkSpaceWidth", "-", 
+             "barCrossSectionalWidth"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar2Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar2Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar2Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "-", "halfWorkSpaceWidth", "-", 
+             "barCrossSectionalWidth"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar2Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar2Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]",
+          "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameBar5Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar1Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", 
+             "barCrossSectionalHeight"}]}], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar1Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", 
+             "barCrossSectionalHeight"}]}], "}"}]}], "\[IndentingNewLine]", 
+         "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameBar6Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar5Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar5Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "barCrossSectionalWidth"}],
+             ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar5Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar5Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar5Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "barCrossSectionalWidth"}],
+             ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar5Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]",
+          "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameOuterCylinder1Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar6Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", " ", 
+             RowBox[{
+              FractionBox["1", "2"], "*", "barCrossSectionalWidth"}]}], ",", 
+            " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar6Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "barCrossSectionalWidth"}],
+             ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar6Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", " ", 
+             RowBox[{
+              FractionBox["1", "2"], "*", "barCrossSectionalHeight"}]}]}], 
+           "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar6Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", " ", 
+             RowBox[{
+              FractionBox["1", "2"], "*", "barCrossSectionalWidth"}]}], ",", 
+            " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar6Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "barCrossSectionalWidth", 
+             "+", "outerCylinderHeight"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar6Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", " ", 
+             RowBox[{
+              FractionBox["1", "2"], "*", "barCrossSectionalHeight"}]}]}], 
+           "}"}]}], "\[IndentingNewLine]", "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"firstFrameOuterCylinder2Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameOuterCylinder1Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "halfWorkSpaceWidth", "+", 
+             "barCrossSectionalWidth"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameOuterCylinder1Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "+", "halfWorkSpaceWidth", "+", 
+             "barCrossSectionalWidth"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]",
+          "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameInnerCylinder1Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameOuterCylinder1Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "y"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder1Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameOuterCylinder1Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "y", "+", 
+             "minCylinderHeight"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder1Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]",
+          "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameInnerCylinder2Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder2Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameOuterCylinder2Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "y"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder2Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder2Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameOuterCylinder2Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "y", "+", 
+             "minCylinderHeight"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameOuterCylinder2Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]",
+          "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameBar7Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar6Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar6Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "barCrossSectionalWidth", 
+             "+", "y", "+", "minCylinderHeight"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar6Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar6Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar6Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "+", "barCrossSectionalWidth", 
+             "+", "y", "+", "minCylinderHeight"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar6Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "3", "]"}], "]"}]}], "}"}]}], "\[IndentingNewLine]",
+          "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"firstFrameBar8Points", " ", "=", " ", 
+        RowBox[{"{", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar3Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar3Points", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar3Points", "[", 
+               RowBox[{"[", "1", "]"}], "]"}], "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", "barCrossSectionalHeight"}]
+             }], "}"}], ",", "\[IndentingNewLine]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"firstFrameBar3Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{"firstFrameBar3Points", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"firstFrameBar3Points", "[", 
+               RowBox[{"[", "2", "]"}], "]"}], "[", 
+              RowBox[{"[", "3", "]"}], "]"}], "+", 
+             "barCrossSectionalHeight"}]}], "}"}]}], "\[IndentingNewLine]", 
+         "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"axle1", "=", " ", 
+          RowBox[{"axleAndBearingPointsCalc", "[", 
+           RowBox[{
+           "firstFrameBar6Points", ",", " ", "barCrossSectionalWidth", ",", 
+            "barCrossSectionalHeight", ",", "  ", "\"\<x\>\"", ",", " ", "0", 
+            ",", " ", "axleDia", ",", " ", "bearingDia", ",", " ", 
+            "axleLength", ",", " ", "bearingLength"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"axle2", "=", " ", 
+          RowBox[{"axleAndBearingPointsCalc", "[", 
+           RowBox[{
+           "firstFrameBar6Points", ",", " ", "barCrossSectionalWidth", ",", 
+            "barCrossSectionalHeight", ",", "  ", "\"\<x\>\"", ",", " ", "1", 
+            ",", " ", "axleDia", ",", " ", "bearingDia", ",", " ", 
+            "axleLength", ",", " ", "bearingLength"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"axle3", "=", " ", 
+          RowBox[{"axleAndBearingPointsCalc", "[", 
+           RowBox[{
+           "firstFrameBar8Points", ",", " ", "barCrossSectionalWidth", ",", 
+            "barCrossSectionalHeight", ",", "  ", "\"\<x\>\"", ",", " ", "1", 
+            ",", " ", "axleDia", ",", " ", "bearingDia", ",", " ", 
+            "axleLength", ",", " ", "bearingLength"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"axle4", "=", " ", 
+          RowBox[{"motor", "[", 
+           RowBox[{
+           "firstFrameBar8Points", ",", " ", "barCrossSectionalWidth", ",", 
+            "barCrossSectionalHeight", ",", "  ", "\"\<x\>\"", ",", " ", "0", 
+            ",", " ", "axleDia", ",", " ", "bearingDia", ",", " ", 
+            "axleLength", ",", " ", "motorLength"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"axle5", "=", " ", 
+          RowBox[{"axleAndBearingPointsCalc", "[", 
+           RowBox[{
+           "firstFrameBar7Points", ",", " ", "barCrossSectionalWidth", ",", 
+            "barCrossSectionalHeight", ",", "  ", "\"\<x\>\"", ",", " ", "0", 
+            ",", " ", "axleDia", ",", " ", "bearingDia", ",", " ", 
+            "axleLength", ",", " ", "bearingLength"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"axle6", "=", " ", 
+          RowBox[{"axleAndBearingPointsCalc", "[", 
+           RowBox[{
+           "firstFrameBar7Points", ",", " ", "barCrossSectionalWidth", ",", 
+            "barCrossSectionalHeight", ",", "  ", "\"\<x\>\"", ",", " ", "1", 
+            ",", " ", "axleDia", ",", " ", "bearingDia", ",", " ", 
+            "axleLength", ",", " ", "bearingLength"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"chain1", " ", "=", " ", 
+          RowBox[{"chain", "[", 
+           RowBox[{
+           "firstFrameBar6Points", ",", " ", "barCrossSectionalWidth", ",", 
+            "barCrossSectionalHeight", ",", "  ", "\"\<x\>\"", ",", " ", "0", 
+            ",", " ", "axleDia", ",", " ", "bearingDia", ",", " ", 
+            "axleLength", ",", " ", "bearingLength"}], "]"}]}], ";"}], 
+        "\[IndentingNewLine]", "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"{", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"Cuboid", "[", 
+          RowBox[{
+           RowBox[{"firstFrameBar1Points", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"firstFrameBar1Points", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}], "\[IndentingNewLine]", 
+         ",", "\[IndentingNewLine]", 
+         RowBox[{"Cuboid", "[", 
+          RowBox[{
+           RowBox[{"firstFrameBar2Points", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"firstFrameBar2Points", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Cuboid", "[", 
+          RowBox[{
+           RowBox[{"firstFrameBar3Points", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"firstFrameBar3Points", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Cuboid", "[", 
+          RowBox[{
+           RowBox[{"firstFrameBar4Points", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"firstFrameBar4Points", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Cuboid", "[", 
+          RowBox[{
+           RowBox[{"firstFrameBar5Points", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"firstFrameBar5Points", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Cuboid", "[", 
+          RowBox[{
+           RowBox[{"firstFrameBar6Points", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"firstFrameBar6Points", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Cylinder", "[", 
+          RowBox[{"firstFrameOuterCylinder1Points", ",", " ", 
+           RowBox[{"outerCylinderDia", "/", "2"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Cylinder", "[", 
+          RowBox[{"firstFrameOuterCylinder2Points", ",", " ", 
+           RowBox[{"outerCylinderDia", "/", "2"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", "Cyan", ",", "\[IndentingNewLine]", 
+         RowBox[{"Cylinder", "[", 
+          RowBox[{"firstFrameInnerCylinder1Points", ",", " ", 
+           RowBox[{"innerCylinderDia", "/", "2"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Cylinder", "[", 
+          RowBox[{"firstFrameInnerCylinder2Points", ",", " ", 
+           RowBox[{"innerCylinderDia", "/", "2"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{"Cuboid", "[", 
+          RowBox[{
+           RowBox[{"firstFrameBar7Points", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"firstFrameBar7Points", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+         "\[IndentingNewLine]", "Orange", ",", "\[IndentingNewLine]", 
+         RowBox[{"Cuboid", "[", 
+          RowBox[{
+           RowBox[{"firstFrameBar8Points", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"firstFrameBar8Points", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], "\[IndentingNewLine]", 
+        
+        RowBox[{"(*", 
+         RowBox[{
+         "axle1", ",", "axle2", ",", " ", "axle3", ",", " ", "axle4", ",", 
+          " ", "axle5", ",", " ", "axle6", ",", "\[IndentingNewLine]", 
+          "chain1"}], "*)"}], "\[IndentingNewLine]", "}"}]}], 
+      "\[IndentingNewLine]", "}"}]}], "]"}]}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"OneDoFFrame", "[", 
+    RowBox[{"0", ",", "0", ",", "0", ",", " ", "0", ",", "0", ",", "0"}], 
+    "]"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{
+     RowBox[{"OneDoFFrame", "[", 
+      RowBox[{"0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], "]"}], 
+     ",", " ", 
+     RowBox[{"Axes", "\[Rule]", " ", "True"}], ",", " ", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<X\>\"", ",", "\"\<Y\>\"", ",", " ", "\"\<Z\>\""}], 
+       "}"}]}]}], "]"}], "*)"}]}], "\[IndentingNewLine]"}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.8276684682765827`*^9, 3.827668469628909*^9}, {
+   3.827668640577669*^9, 3.827668693078309*^9}, {3.827668765809257*^9, 
+   3.827668826895095*^9}, {3.827669174960524*^9, 3.82766928244275*^9}, {
+   3.827669381681745*^9, 3.827669393035651*^9}, {3.827669437579111*^9, 
+   3.8276694491051826`*^9}, {3.827669485937961*^9, 3.827669487102746*^9}, {
+   3.827669520044435*^9, 3.8276695227844887`*^9}, {3.82766960471775*^9, 
+   3.8276698098134537`*^9}, {3.827670462641802*^9, 3.82767047413652*^9}, {
+   3.82767051890629*^9, 3.827670664977203*^9}, {3.827670695868449*^9, 
+   3.82767078745158*^9}, {3.8276708325497313`*^9, 3.827670945915473*^9}, {
+   3.827670978289988*^9, 3.82767099800854*^9}, 3.827671088027734*^9, {
+   3.827671134330358*^9, 3.8276712049433413`*^9}, {3.827671242290254*^9, 
+   3.827671290140277*^9}, {3.8276713616586723`*^9, 3.827671619986974*^9}, {
+   3.82767166746554*^9, 3.8276719624626923`*^9}, {3.8276723421123533`*^9, 
+   3.827672622858322*^9}, {3.827672685593665*^9, 3.8276727308058434`*^9}, {
+   3.827672786433919*^9, 3.827672804621574*^9}, {3.8276728348015633`*^9, 
+   3.827672916685244*^9}, {3.827673170278576*^9, 3.827673208355761*^9}, {
+   3.8276733883461123`*^9, 3.827673584560601*^9}, {3.827673680914713*^9, 
+   3.8276737034193573`*^9}, {3.8276737887983923`*^9, 
+   3.8276738468063087`*^9}, {3.827673901384047*^9, 3.8276739017913513`*^9}, {
+   3.827673934250449*^9, 3.827674019829088*^9}, {3.827674065853731*^9, 
+   3.827674173994768*^9}, {3.8277215957708807`*^9, 3.827721609387637*^9}, {
+   3.827721666041622*^9, 3.8277217041807947`*^9}, {3.827721734222829*^9, 
+   3.8277217523005733`*^9}, {3.827721792985918*^9, 3.827721835043234*^9}, {
+   3.827721865713449*^9, 3.827721872429809*^9}, {3.82772197355225*^9, 
+   3.827722019170039*^9}, {3.827722051200912*^9, 3.827722096565853*^9}, {
+   3.827722131518165*^9, 3.82772219261979*^9}, {3.827722254854355*^9, 
+   3.827722267037499*^9}, {3.827722321918013*^9, 3.827722388457986*^9}, {
+   3.8277224508308163`*^9, 3.8277225050285*^9}, {3.827728752635696*^9, 
+   3.8277288406295147`*^9}, {3.827728885715657*^9, 3.82772893894287*^9}, {
+   3.827728981730618*^9, 3.827728985102326*^9}, {3.827729020667777*^9, 
+   3.8277291956950293`*^9}, {3.827729236353043*^9, 3.827729247233883*^9}, {
+   3.8277293233590307`*^9, 3.827729383981995*^9}, {3.8277294285590553`*^9, 
+   3.827729486459199*^9}, {3.82772957676231*^9, 3.827729602878132*^9}, {
+   3.827729642187663*^9, 3.827729669251957*^9}, {3.827729760931161*^9, 
+   3.827729845662553*^9}, {3.827729955904935*^9, 3.827729982535109*^9}, {
+   3.8277300925000877`*^9, 3.82773010036657*^9}, {3.827730169887198*^9, 
+   3.827730188359058*^9}, {3.82773058100041*^9, 3.8277307108866787`*^9}, {
+   3.827730804913081*^9, 3.827730841581461*^9}, {3.8277308773880157`*^9, 
+   3.8277309216281977`*^9}, {3.827730969486988*^9, 3.8277310905019627`*^9}, {
+   3.827731133430355*^9, 3.8277311635830584`*^9}, {3.827731194440818*^9, 
+   3.8277312163239*^9}, {3.827731254083067*^9, 3.8277312771453238`*^9}, {
+   3.827731309517902*^9, 3.827731433239791*^9}, {3.827731478636631*^9, 
+   3.827731817928708*^9}, {3.827731891820981*^9, 3.827731931010518*^9}, {
+   3.827732033347007*^9, 3.82773204942022*^9}, {3.8277320853639507`*^9, 
+   3.8277321371839933`*^9}, {3.827732228867426*^9, 3.827732268054212*^9}, {
+   3.827732313905753*^9, 3.82773239286381*^9}, {3.8277324329079437`*^9, 
+   3.827732507570859*^9}, {3.827732550513454*^9, 3.827732571368997*^9}, {
+   3.827732746753126*^9, 3.82773279319785*^9}, {3.827732825933072*^9, 
+   3.827732883806272*^9}, {3.827732917338264*^9, 3.827732936812421*^9}, {
+   3.827732974587331*^9, 3.827732984404731*^9}, {3.827745125660433*^9, 
+   3.827745174488481*^9}, {3.827745325989834*^9, 3.827745384661934*^9}, {
+   3.827745504315619*^9, 3.827745657839861*^9}, {3.827745702732872*^9, 
+   3.82774582858897*^9}, {3.827745890047784*^9, 3.8277459032591963`*^9}, {
+   3.827745948502514*^9, 3.827746030053267*^9}, {3.827746069598913*^9, 
+   3.827746126825193*^9}, {3.827746171524145*^9, 3.827746177574506*^9}, {
+   3.8277463492019787`*^9, 3.827746362349725*^9}, {3.827746473433445*^9, 
+   3.827746601918195*^9}, {3.827807384104597*^9, 3.827807467045534*^9}, {
+   3.8278075004533863`*^9, 3.827807556355134*^9}, {3.8278076649423103`*^9, 
+   3.8278076676784887`*^9}, {3.827807707647357*^9, 3.8278077400111837`*^9}, {
+   3.827807796492374*^9, 3.827807866689517*^9}, {3.827807992773052*^9, 
+   3.8278080095897512`*^9}, {3.827808164762299*^9, 3.8278082236343307`*^9}, {
+   3.8278083212595882`*^9, 3.827808367707959*^9}, {3.827808425680476*^9, 
+   3.827808440166809*^9}, {3.827808590465598*^9, 3.8278086103392973`*^9}, {
+   3.827808729949171*^9, 3.8278087391290903`*^9}, {3.827808809493133*^9, 
+   3.827808816551382*^9}, {3.8278092256649647`*^9, 3.8278092558698606`*^9}, {
+   3.8278093335244913`*^9, 3.827809381706039*^9}, {3.827812998495719*^9, 
+   3.827813027618617*^9}, {3.827813063259919*^9, 3.827813082891486*^9}, {
+   3.8278131290575666`*^9, 3.827813141526499*^9}, {3.8278277250479383`*^9, 
+   3.827827751316332*^9}, {3.827827791924198*^9, 3.8278278255184*^9}, {
+   3.8278278927394323`*^9, 3.827827915878778*^9}, {3.8278279484971857`*^9, 
+   3.827827983978306*^9}, {3.8278280386227427`*^9, 3.827828088061522*^9}, {
+   3.827828122947398*^9, 3.8278282455182467`*^9}, {3.827828276414094*^9, 
+   3.827828343644702*^9}, {3.8278286454994993`*^9, 3.827828655990961*^9}, {
+   3.827829378691277*^9, 3.8278293874231377`*^9}, {3.827829491925479*^9, 
+   3.827829498329516*^9}, {3.827992359526167*^9, 3.827992366621447*^9}, {
+   3.827992418309862*^9, 3.827992483280046*^9}, {3.8279925755254307`*^9, 
+   3.82799258161547*^9}, {3.82799280017306*^9, 3.8279928144992313`*^9}, {
+   3.827992852094288*^9, 3.8279928649298058`*^9}, 3.827992897166154*^9, {
+   3.827993033393249*^9, 3.827993048143364*^9}, {3.8279932365557756`*^9, 
+   3.827993272976532*^9}, {3.827993709663301*^9, 3.827993712862742*^9}, {
+   3.827993908691996*^9, 3.827993944940637*^9}, {3.8279941072343483`*^9, 
+   3.827994131249037*^9}, {3.8279942614162273`*^9, 3.8279943039290752`*^9}, {
+   3.8279944506956778`*^9, 3.827994498456399*^9}, {3.827994541993782*^9, 
+   3.827994600150312*^9}, {3.827994632540948*^9, 3.8279946335860233`*^9}, {
+   3.827994704669252*^9, 3.827994761018344*^9}, {3.838127664742612*^9, 
+   3.838127665518798*^9}, {3.8381277005808067`*^9, 3.8381277284837*^9}, {
+   3.8381277808414*^9, 3.838127799344637*^9}, {3.8381278297640333`*^9, 
+   3.838127870272505*^9}, {3.83812790176095*^9, 3.838128089865559*^9}, {
+   3.838128245985512*^9, 3.8381282516753674`*^9}, {3.838128314347589*^9, 
+   3.838128345913975*^9}, {3.838128452214755*^9, 3.838128548677647*^9}, {
+   3.838128651598583*^9, 3.838128768804556*^9}, {3.8381289969234953`*^9, 
+   3.83812916131533*^9}, {3.838129499162805*^9, 3.838129859735515*^9}, {
+   3.838129890672035*^9, 3.838130028343307*^9}, {3.838130084636797*^9, 
+   3.8381300857558317`*^9}, {3.838130135751659*^9, 3.838130164143816*^9}, {
+   3.838130204322303*^9, 3.838130437355741*^9}, {3.83813047291059*^9, 
+   3.838130616902356*^9}, {3.838130653119578*^9, 3.83813065913981*^9}, {
+   3.838130692629657*^9, 3.83813072425773*^9}, {3.8381307789044037`*^9, 
+   3.83813079325169*^9}, {3.838130855453559*^9, 3.838130873911141*^9}, {
+   3.838130928087905*^9, 3.838131022227818*^9}, {3.838131052925589*^9, 
+   3.838131131111225*^9}, {3.838131189550724*^9, 3.838131252362371*^9}, {
+   3.838131341307641*^9, 3.838131544638818*^9}, {3.8381315755465*^9, 
+   3.8381315838204*^9}, {3.838131614622624*^9, 3.8381316151497*^9}, {
+   3.838131719543212*^9, 3.8381317229487543`*^9}, {3.8381318901832848`*^9, 
+   3.838131982877041*^9}, {3.8381320150374002`*^9, 3.8381321287869997`*^9}, {
+   3.8381321792156353`*^9, 3.8381322166255293`*^9}, {3.838158204292976*^9, 
+   3.8381582050934057`*^9}, {3.838158240458301*^9, 3.838158286131329*^9}, 
+   3.838158411994216*^9, {3.838158450962351*^9, 3.838158485159708*^9}, 
+   3.838158675077729*^9, {3.83815877177265*^9, 3.838158798783317*^9}, {
+   3.838158860149576*^9, 3.83815894892498*^9}, {3.838158981461952*^9, 
+   3.838159186326639*^9}, {3.838159256474792*^9, 3.838159258025359*^9}, {
+   3.8381593067952414`*^9, 3.838159377771822*^9}, {3.838159411026805*^9, 
+   3.838159413520794*^9}, {3.83815947779703*^9, 3.8381595449282923`*^9}, {
+   3.838159576980048*^9, 3.838159664700387*^9}, {3.838160181487275*^9, 
+   3.838160244586465*^9}, {3.838160285821557*^9, 3.83816048734523*^9}, {
+   3.8381605199908648`*^9, 3.838160764360278*^9}, {3.838160808845995*^9, 
+   3.838160965341991*^9}, {3.838161006962986*^9, 3.8381610872898684`*^9}, {
+   3.838180159929861*^9, 3.838180173427734*^9}, {3.838180245831686*^9, 
+   3.838180349163536*^9}, {3.838180425109963*^9, 3.838180426519453*^9}, {
+   3.838180459526824*^9, 3.838180459855671*^9}, {3.838180536093184*^9, 
+   3.8381807650540447`*^9}, {3.838180802005991*^9, 3.838180853905631*^9}, {
+   3.8381809339962597`*^9, 3.838180966966813*^9}, {3.8381810012900743`*^9, 
+   3.838181052623068*^9}, 3.838181091919074*^9, {3.838181148191787*^9, 
+   3.838181177842861*^9}, {3.838181560431774*^9, 3.838181566891378*^9}, {
+   3.8381816634837103`*^9, 3.838181666113393*^9}, {3.8381817117567873`*^9, 
+   3.838181717481367*^9}, {3.838181756787809*^9, 3.838181765316907*^9}, {
+   3.838181798167543*^9, 3.838181907895608*^9}, {3.83818195381246*^9, 
+   3.838182009844335*^9}, {3.838182059829067*^9, 3.8381820653977613`*^9}, {
+   3.838182113124729*^9, 3.83818215767484*^9}, {3.838182221169464*^9, 
+   3.838182444059284*^9}, {3.8381824993871202`*^9, 3.838182503061208*^9}, {
+   3.83818255163056*^9, 3.8381825963310423`*^9}, {3.838182633914878*^9, 
+   3.838182659123789*^9}, {3.8381830564108877`*^9, 3.838183184291617*^9}, 
+   3.838183217746427*^9, {3.838184637638146*^9, 3.838184641469046*^9}, 
+   3.838184796218501*^9, {3.838187770113604*^9, 3.8381878622944098`*^9}, 
+   3.838187893282002*^9, {3.838187998845108*^9, 3.838188165304974*^9}, {
+   3.838188278763249*^9, 3.838188286478701*^9}, 3.838188329760817*^9, {
+   3.83818840106429*^9, 3.838188460883794*^9}, {3.8381885070413446`*^9, 
+   3.8381885725044537`*^9}, {3.838188639260746*^9, 3.838188664351614*^9}, {
+   3.838188716873496*^9, 3.8381889671182747`*^9}, {3.838190085535077*^9, 
+   3.838190108342107*^9}, {3.838192308228177*^9, 3.838192312223207*^9}, {
+   3.838192347211532*^9, 3.8381923716131887`*^9}, {3.838192432853136*^9, 
+   3.838192443172688*^9}, {3.8381926294225187`*^9, 3.838192653260775*^9}, {
+   3.838192726552774*^9, 3.8381927269938726`*^9}, {3.8381927575565033`*^9, 
+   3.838192802943337*^9}, {3.8381928475970697`*^9, 3.838192851114957*^9}, {
+   3.8381929072528467`*^9, 3.838192922721264*^9}, {3.83819296003402*^9, 
+   3.838192991815673*^9}, {3.838193023944995*^9, 3.838193059543642*^9}, {
+   3.838193113770022*^9, 3.838193144005808*^9}, {3.8381935506849327`*^9, 
+   3.838193556566435*^9}, {3.8381936109114*^9, 3.838193644467403*^9}, {
+   3.838194021505951*^9, 3.83819403873356*^9}, {3.838194221572235*^9, 
+   3.838194232323038*^9}, {3.8381943055022583`*^9, 3.838194305875434*^9}, {
+   3.838194371132193*^9, 3.838194407262505*^9}, {3.838194466699394*^9, 
+   3.838194467742116*^9}, {3.83819452086718*^9, 3.8381946173015738`*^9}, 
+   3.838194648125948*^9, {3.8381947017771883`*^9, 3.838194707024137*^9}, {
+   3.838194755286233*^9, 3.8381947862354107`*^9}, {3.8381968074549227`*^9, 
+   3.838196810088459*^9}, 
+   3.838198613639243*^9},ExpressionUUID->"8843fb4b-7901-4b03-9bfa-\
+17a329cfc9c6"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Animate", "[", 
+  RowBox[{
+   RowBox[{"Graphics3D", "[", 
+    RowBox[{
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{"OneDoFFrame", "[", 
+       RowBox[{"0", ",", "y", ",", "0", ",", "0", ",", "0", ",", "0"}], "]"}],
+       "}"}], ",", " ", 
+     RowBox[{"Axes", "\[Rule]", " ", "False"}], ",", " ", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"\"\<X\>\"", ",", "\"\<Y\>\"", ",", " ", "\"\<Z\>\""}], 
+       "}"}]}]}], "\[IndentingNewLine]", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"y", ",", "0", ",", "190", ",", 
+     RowBox[{"Appearance", "\[Rule]", "\"\<Labeled\>\""}]}], "}"}], ",", " ", 
+   
+   RowBox[{"AnimationRunning", "\[Rule]", "False"}], ",", " ", 
+   RowBox[{"AnimationDirection", "\[Rule]", "ForwardBackward"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.838193895359572*^9, 3.8381939529395514`*^9}, {
+  3.838195126505281*^9, 3.838195214608801*^9}, {3.838195336487342*^9, 
+  3.838195345088295*^9}, {3.8381953784922533`*^9, 3.838195439658968*^9}, {
+  3.838195472256837*^9, 3.838195633830442*^9}, {3.838195672089373*^9, 
+  3.838195683967251*^9}, {3.838196131518334*^9, 3.8381961713684397`*^9}, {
+  3.8381962093772*^9, 3.838196278765099*^9}, {3.8381963105203114`*^9, 
+  3.8381963294084682`*^9}, {3.838196408839838*^9, 3.838196535559226*^9}, {
+  3.838196626518708*^9, 3.838196721533621*^9}, {3.838196892238226*^9, 
+  3.8381969364698343`*^9}},
+ CellLabel->"In[69]:=",ExpressionUUID->"a3960e6a-e973-4232-be3c-ef37be8738ad"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`y$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`y$$], 0, 190}}, Typeset`size$$ = {360., {172., 178.}},
+     Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`y$225275$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`y$$ = 0}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`y$$, $CellContext`y$225275$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Graphics3D[{
+         $CellContext`OneDoFFrame[0, $CellContext`y$$, 0, 0, 0, 0]}, Axes -> 
+        False, AxesLabel -> {"X", "Y", "Z"}], 
+      "Specifications" :> {{$CellContext`y$$, 0, 190, Appearance -> "Labeled",
+          AnimationRunning -> False, AnimationDirection -> ForwardBackward, 
+         AppearanceElements -> {
+          "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons", 
+           "DirectionButton"}}}, 
+      "Options" :> {
+       ControlType -> Animator, AppearanceElements -> None, DefaultBaseStyle -> 
+        "Animate", DefaultLabelStyle -> "AnimateLabel", SynchronousUpdating -> 
+        True, ShrinkingDelay -> 10.}, "DefaultOptions" :> {}],
+     ImageSizeCache->{407., {207., 214.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Animate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.838193925052927*^9, 3.8381939541697197`*^9}, {
+   3.8381951919608603`*^9, 3.838195215677252*^9}, {3.838195338835683*^9, 
+   3.838195348057012*^9}, {3.838195391124522*^9, 3.8381954405529327`*^9}, {
+   3.838195474155604*^9, 3.838195561685886*^9}, 3.838195599172913*^9, 
+   3.838195634954236*^9, {3.838195675870047*^9, 3.8381956849348593`*^9}, 
+   3.838196177841359*^9, {3.8381962140965567`*^9, 3.838196249936421*^9}, 
+   3.838196280565346*^9, {3.8381963163028803`*^9, 3.838196330476685*^9}, {
+   3.83819641074331*^9, 3.838196448988517*^9}, {3.838196514287532*^9, 
+   3.838196526157345*^9}, {3.838196632081676*^9, 3.838196682301736*^9}, 
+   3.838196722539452*^9, 3.8381968155371637`*^9, {3.8381969089273987`*^9, 
+   3.838196937341373*^9}, 3.838198664383521*^9},
+ CellLabel->"Out[69]=",ExpressionUUID->"36c1be41-69af-45e1-9c42-89063896e4f5"]
+}, Open  ]]
+},
+WindowSize->{1528, 836},
+WindowMargins->{{0, Automatic}, {0, Automatic}},
+FrontEndVersion->"11.3 for Linux x86 (64-bit) (March 6, 2018)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 646, 12, 123, "Text",ExpressionUUID->"653a274c-dec1-48d6-a7ee-b193e8cd8ef3"],
+Cell[1207, 34, 2380, 38, 468, "Text",ExpressionUUID->"7df758c8-f7f3-49d3-8d69-edb7858774be"],
+Cell[3590, 74, 58456, 1228, 4994, "Input",ExpressionUUID->"8843fb4b-7901-4b03-9bfa-17a329cfc9c6",
+ InitializationCell->True],
+Cell[CellGroupData[{
+Cell[62071, 1306, 1499, 30, 78, "Input",ExpressionUUID->"a3960e6a-e973-4232-be3c-ef37be8738ad"],
+Cell[63573, 1338, 2917, 52, 440, "Output",ExpressionUUID->"36c1be41-69af-45e1-9c42-89063896e4f5"]
+}, Open  ]]
+}
+]
+*)
+
